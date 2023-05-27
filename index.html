@@ -1,56 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
+<head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Resume</title>
- </head>
-<body>
+    <title>Project</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+</head>
+<body onload="onInit()">
    
-    <h1>Tiger</h1>
-    <img src="./images/OIP.jpg" height="125" alt="Tiger">
-    <h2>Summary</h2>
-    <p>My name is tiger i like stalking friends and ambush my food and i dont have friends</p>
-    <hr />
-   <h2>Eduction</h2>
-    <p>Mom taught me every thing i need to enjoy a good meal and rest</p>
-    <hr />
-    <h2>Work exeprience</h2>
-    <ul>
-        <h3><li>Water food</li></h3>
-        <p>june 2020 -may 2023</p>
-        <ul>
-            <li>Caught few stinky aligators</li>
-            <li>Big fat juicy hippo</li>
-            <li>Few tasty fish</li>
-        </ul>
-        <h3><li>Land food</li></h3>
-        <p>June 2020 - may 2023</p>
-        <ul>
-            <li>annoying litle elephant</li>
-            <li>moose</li>
-            <li>deer</li>
-        </ul>
-    </ul>
- <hr />
+<div class="game">
+    <h1>Order of the numbers</h1>
+    <button class="easy" onclick="selectMode(16)"><i>Easy</i></button>
+    <button class="medium" onclick="selectMode(25)"><i>Medium</i></button>
+    <button class="hard" onclick="selectMode(36)"><i>Hard</i></button>
+     <table></table>
+<div class="clock"></div>
+</div>
 
- <h2>Skills</h2>
- <ul>
-    <li>Stealth <img src="https://bestbassfishinglures.com/wp-content/uploads/2021/08/download-1-e1628599394780.png" height="15.5" alt="5 stars out of 5"></li>
-    <li>Quick <img src="https://garagegympro.com/wp-content/uploads/2018/05/5-Stars-rating-400px-4.jpg" height="15.5" alt="4 stars out of 5"></li>
-    <li>strong <img src="https://bestbassfishinglures.com/wp-content/uploads/2021/08/download-1-e1628599394780.png" height="15.5" alt="5 stars out of 5"></li>
-    <li>Big <img src="https://bestbassfishinglures.com/wp-content/uploads/2021/08/download-1-e1628599394780.png" height="15.5" alt="5 stars out of 5"></li>
- </ul>
- <hr />
 
- <h2>Awards and Certifications</h2>
- <ul><li>King of the jungle</li></ul>
- <hr />
- <h3>Other</h3>
- <ul>
-    <li><a href="https://en.wikipedia.org/wiki/Tiger">More about me</a></li><br>
-    <li><a href="contactme.html">Contact me</a></li>
- </ul>
- <p>© Tiger. All rights reserved.</p>
+<script src="js/main.js"></script>
+<script src="js/util.js"></script>
 </body>
 </html>

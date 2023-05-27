@@ -1,0 +1,81 @@
+td {
+
+    border: 1px solid black;
+    background-color: #EAEAEA;
+    font-size: 30px;
+    font-family: 'Press Start 2P', cursive;
+    height: 1px;
+    width: 100%;
+    box-shadow: 0 0 0 1px #163772 inset,0 0 0 2px rgba(255, 255, 255, 0.15) inset,0 4px 0 0      #08D9D1,0 4px 0 1px #FF2E63,0 4px 4px 1px #FF2E63;
+
+    
+   
+   
+}
+
+tr {
+
+    height: 1px;
+    width: 1px;
+   
+
+}
+
+table {
+
+    border: 10px solid #08D9D1;
+    height: 300px;
+    width: 100%;
+    text-align: center;
+    background-color: #FF2E63;
+    padding: 5px;
+    margin-left: 1%;
+    table-layout: fixed;
+    position: relative;
+    box-shadow: 0 0 0 1px #163772 inset,0 0 0 2px rgba(255, 255, 255, 0.15) inset,0 4px 0 0      #08D9D1,0 4px 0 1px #FF2E63,0 4px 4px 1px #FF2E63;
+
+
+}
+
+h1 {
+    
+    font-size: x-large;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    position: relative;
+    left: 3%;
+    
+}
+
+.game {
+
+
+    border: 5px solid black;
+    height: 400px;
+    width: 350px;
+    padding: 50px;
+    margin-left: 30%;
+    margin-top: 10%;
+    background-color: #08D9D6;
+    position: absolute;
+    box-shadow: 0 0 0 1px #163772 inset,0 0 0 2px rgba(255, 255, 255, 0.15) inset,0 4px 0 0      #08D9D1,0 4px 0 1px #FF2E63,0 4px 4px 1px #FF2E63;
+
+}
+
+.clock {
+
+    font-size: 10px;
+    font-family: 'Press Start 2P', cursive;
+    position: relative;
+    top:20px
+
+}
+
+button{
+
+    margin-left: 8%;
+    font-family: 'Press Start 2P', cursive;
+    box-shadow: 0 0 0 1px #163772 inset,0 0 0 2px rgba(255, 255, 255, 0.15) inset,0 4px 0 0      #08D9D1,0 4px 0 1px #08D9D6,0 4px 4px 1px #08D9D6;
+
+    
+}
