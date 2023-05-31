@@ -1,12 +1,9 @@
 'use strict'
 
-
-
 var gBoard
 const MINE = '☠️'
 const FLAG = '🚩'
 const EMPTY = ''
-
 
 
 function createBoard(rows = gLevel.SIZE, cols = gLevel.SIZE) {
@@ -64,7 +61,6 @@ function updateNegsCount() {
     }
 }
 
-
 function setMinesNegsCount(board, rowIdx, colIdx) {
 
     var count = 0
@@ -97,9 +93,8 @@ function onCellClicked(elCell, i, j) {
         if (!gFirstClick) {
             createMines(i,j)
             updateNegsCount()
+            timer()
             gFirstClick = true
-            // console.log(gBoard)
-            // console.log(gGame)
         }
         if (cell.minesAroundCount) elCell.innerHTML = cell.minesAroundCount
         else expandShown(gBoard, elCell, i, j)
@@ -174,11 +169,10 @@ function expandShown(board, elCell, rowIdx, colIdx) {
 function randMinePlacer(gLevelSIZE, Currcell) {
 
     //Probabilty depends on the game difficulty
-    // Easy : 16/12 probabilty == 12/16
+    // Easy : probabilty == 12/16
     // Medium :
     // Hard :
 
-    console.log(Math.pow(gLevelSIZE, 2))
     const probabilty = 12 / Math.pow(gLevelSIZE, 2)
 
     if (Math.random() > probabilty) {

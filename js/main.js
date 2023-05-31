@@ -6,10 +6,12 @@ const NORMAL = '😀'
 const DEAD = '😒'
 const WON = '😎'
 
+
 const gLevel = {
   SIZE: 4,
   MINES: 2,
-  LIVES: 3
+  LIVES: 3,
+  HINTS: 3
 }
 
 const gGame = {
@@ -30,10 +32,11 @@ function onInit() {
   gFirstClick = false
   gBoard = createBoard()
   renderBoard(gBoard)
-  var elModal = document.querySelector('.modal')
-  elModal.style.display = 'none'
   manageLives()
   manageSmiley(NORMAL)
+
+  var elModal = document.querySelector('.modal')
+  elModal.style.display = 'none'
 }
 
 
@@ -78,9 +81,47 @@ function manageLives() {
 
 }
 
-function manageSmiley(emoji){
+function manageSmiley(emoji) {
 
-var smiley = document.querySelector('.smiley')  
-smiley.innerHTML = emoji
+  var smiley = document.querySelector('.smiley')
+  smiley.innerHTML = emoji
 }
 
+function manageDifficulty(elBtn) {
+
+  gLevel.SIZE = elBtn
+  resetStats()
+  onInit()
+
+}
+
+function resetStats() {
+
+  gGame.shownCount = 0
+  gGame.markedCount = 0
+  gGame.secsPassed = 0
+  gGame.mineCount = 0
+  gGame.markedMines = 0
+  gLevel.LIVES = 3
+  clearInterval(timer)
+
+}
+
+function hints(elImg) {
+
+  console.log('hint function is in progress')
+
+  elImg.style.backgroundColor = '#111'
+  gLevel.HINTS--
+
+}
+
+
+function timer() {
+  //crappy timer need to improve
+  var sec = 0;
+  var timer = setInterval(function () {
+    document.querySelector('.clock').innerHTML = sec.toFixed(2);
+    sec += 1;
+  }, 1000);
+}

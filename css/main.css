@@ -16,10 +16,11 @@ td {
     height: 100px;
     width: 100px;
     table-layout: fixed;
-    font-size: 40px;
+    font-size: 30px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 150px;
+    box-shadow: 0 0 0 1px #163772 inset,0 0 0 2px rgba(255, 255, 255, 0.15) inset,0 4px 0 0      #08D9D1,0 4px 0 1px #FF2E63,0 4px 4px 1px #FF2E63;
 }
 
 
@@ -37,14 +38,14 @@ td {
 
 .mine {
 
-    background-color: red;
+    background-color: #FF2E63;
 }
 
 footer {
 
-    text-align: center;
-    margin-top: 10px;
-    font-size: medium;
+    text-align:end;
+    margin-top: 17px;
+    font-size: large;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -67,13 +68,14 @@ footer {
     height: 30px;
     width: 150px;
     margin: auto;
+    margin-top: 2%;
 }
 
 .diffuclty-mode {
 
     margin-left: 43%;
     position: absolute;
-
+    
 }
 
 .smiley {
@@ -83,5 +85,43 @@ footer {
     margin: 5%;
     font-size: 40px;
 
-
 }
+
+button {
+
+    box-shadow: 0 0 0 1px #163772 inset,0 0 0 2px rgba(255, 255, 255, 0.15) inset,0 4px 0 0      #08D9D1,0 4px 0 1px #FF2E63,0 4px 4px 1px #FF2E63;
+}
+
+.clock{
+
+    position: relative;
+    text-align: center;
+    margin: 5%;
+}
+
+#lightbulb1{
+    position: absolute;
+    height: 30px;
+    width: 20px;
+    margin-left: 52%;
+    background-color: yellow;
+    
+}
+
+#lightbulb2{
+    position: absolute;
+    height: 30px;
+    width: 20px;
+    margin-left: 50%;
+    background-color: yellow;
+}
+
+#lightbulb3{
+    position: absolute;
+    height: 30px;
+    width: 20px;
+    margin-left: 48%;
+    background-color: yellow;
+    
+}
+
