@@ -1,0 +1,46 @@
+h1 {
+    text-align: center;
+}
+
+body {
+    background: #111;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+table, th, td {
+   border: 5px solid white;
+   text-align: center;
+   height: 100px;
+   width: 100px;
+   table-layout: fixed;
+   font-size: 40px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+
+td {
+
+    border: 1px solid white;
+    background-color: grey;
+    
+}
+
+.shown {
+
+    background-color: black;
+}
+
+.mine {
+
+    background-color: red;
+}
+
+footer {
+
+    text-align: center;
+    margin-top: 10px;
+    font-size: medium;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
