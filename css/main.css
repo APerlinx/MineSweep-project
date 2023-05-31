@@ -19,6 +19,7 @@ td {
     font-size: 40px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 150px;
 }
 
 
@@ -58,4 +59,29 @@ footer {
     position: absolute;
     top: 300px;
     left: calc(50% - 175px);
+}
+
+.lives {
+
+    text-align: center;
+    height: 30px;
+    width: 150px;
+    margin: auto;
+}
+
+.diffuclty-mode {
+
+    margin-left: 43%;
+    position: absolute;
+
+}
+
+.smiley {
+
+    position: relative;
+    text-align: center;
+    margin: 5%;
+    font-size: 40px;
+
+
 }

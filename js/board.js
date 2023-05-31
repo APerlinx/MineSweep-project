@@ -23,8 +23,8 @@ function createBoard(rows = gLevel.SIZE, cols = gLevel.SIZE) {
             }
 
             board[i][j] = cell
+          
 
-            randMinePlacer(gLevel.SIZE, cell)
         }
     }
     // board[0][0].isMine = true
@@ -48,7 +48,7 @@ function renderBoard(board) {
     }
     strHTML += '</tbody></table>'
 
-    updateNegsCount()
+   
     const elContainer = document.querySelector('.board')
     elContainer.innerHTML = strHTML
 
@@ -94,6 +94,13 @@ function onCellClicked(elCell, i, j) {
         gGame.shownCount++
         cell.isShown = true
         elCell.classList.add('shown')
+        if (!gFirstClick) {
+            createMines(i,j)
+            updateNegsCount()
+            gFirstClick = true
+            // console.log(gBoard)
+            // console.log(gGame)
+        }
         if (cell.minesAroundCount) elCell.innerHTML = cell.minesAroundCount
         else expandShown(gBoard, elCell, i, j)
     } else if (!cell.isMarked) {
@@ -101,6 +108,7 @@ function onCellClicked(elCell, i, j) {
         elCell.innerHTML = MINE
         cell.isShown = true
     }
+ 
     checkGameOver(i, j)
 }
 
@@ -127,10 +135,23 @@ function onCellMarked(event, elCell, i, j) {
     checkGameOver(i, j)
 }
 
+function createMines(iOFCell,jOfCell) {
+   var rows = gLevel.SIZE
+   var cols = gLevel.SIZE
+    for (var i = 0; i < rows; i++) {
+        for (var j = 0; j < cols; j++) {
+            if(i === iOFCell && j === jOfCell) continue
+            randMinePlacer(gLevel.SIZE, gBoard[i][j] )
+        }
+    }
+}
+
+
+
 function expandShown(board, elCell, rowIdx, colIdx) {
 
     if (board[rowIdx][colIdx] > 0) return
-    
+  
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
         if (i < 0 || i >= board.length) continue
         for (var j = colIdx - 1; j <= colIdx + 1; j++) {
@@ -140,7 +161,7 @@ function expandShown(board, elCell, rowIdx, colIdx) {
             if (!currCell.minesAroundCount) {
                 gGame.shownCount++
                 currCell.isShown = true
-                renderCell({i,j}) // add shown class to the relevant cells
+                renderCell({ i, j }) // add shown class to the relevant cells
 
             }
 

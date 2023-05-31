@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,17 +8,28 @@
     <link rel="stylesheet" href="css/main.css" />
     <title>Document</title>
 </head>
+
 <body onload="onInit()">
     <h1>MineSweep</h1>
-        
+    
+    <div class="diffuclty-mode">
+        <div class="smiley"></div>
+        <button>Easy</button>
+        <button>Medium</button>
+        <button>Hard</button>
+    </div>
+
     <table class="board"> </table>
 
+    <div class="modal"></div>
+
+    <div class="lives"></div>
+
     <footer>Alon Perlin</footer>
-    <div class="modal">
-        
-    </div>
+
     <script src="js/main.js"></script>
     <script src="js/board.js"></script>
     <script src="js/util.js"></script>
 </body>
+
 </html>
