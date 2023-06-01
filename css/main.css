@@ -19,7 +19,7 @@ td {
     font-size: 30px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 150px;
+    margin-top: 80px;
     box-shadow: 0 0 0 1px #163772 inset,0 0 0 2px rgba(255, 255, 255, 0.15) inset,0 4px 0 0      #08D9D1,0 4px 0 1px #FF2E63,0 4px 4px 1px #FF2E63;
     
     
@@ -32,6 +32,12 @@ td {
     background-color: grey;
     
 }
+
+.coverd {
+
+    background-color: grey;
+}
+
 
 .shown {
 
@@ -75,7 +81,7 @@ footer {
 
 .diffuclty-mode {
 
-    margin-left: 43%;
+    margin-left: 40.8%;
     position: absolute;
     
 }
@@ -84,7 +90,7 @@ footer {
 
     position: relative;
     text-align: center;
-    margin: 5%;
+    margin: 1%;
     font-size: 40px;
 
 }
@@ -96,7 +102,7 @@ button {
 
 .clock{
 
-    position: relative;
+    padding-top: 0.5%;
    
     
 }
@@ -125,5 +131,22 @@ button {
     margin-left: 48%;
     background-color: yellow;
     
+}
+
+p{
+    font-size: 10px;
+    position: relative;
+    display: inline;
+    
+}
+
+.safeclick{
+    position: absolute;
+    
+}
+
+.manual {
+
+    display: none;
 }
 

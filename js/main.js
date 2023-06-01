@@ -12,12 +12,15 @@ const gLevel = {
   SIZE: 4,
   MINES: 2,
   LIVES: 3,
-  HINTS: 3
+  HINTS: 3,
+  SAFECLICK: 3
 }
 
 const gGame = {
   isOn: false,
   hintIson: false,
+  safeClickIson: false,
+  manuallyCreateMode: false,
   shownCount: 0,
   markedCount: 0,
   secsPassed: 0,
@@ -28,23 +31,28 @@ const gGame = {
 var gFirstClick
 var timerId
 var hintIntervalId
-var finalScore 
+var finalScore
+var gCountMinesforManually 
 
 
 function onInit() {
 
   gGame.isOn = true
   gFirstClick = false
+  finalScore = 0 // for Best Score task
+  gCountMinesforManually = 10 // for Manually positioned mines task -> board.js
   gBoard = createBoard()
   renderBoard(gBoard)
   manageLives()
   manageSmiley(NORMAL)
-  finalScore = 0
+  
   initializeHighScore()
   saveHighScore()
   var elModal = document.querySelector('.modal')
   elModal.style.display = 'none'
+  console.log(gGame.manuallyCreateMode)
   
+
   // clearStorage()
   // localStorage.clear()
 }
@@ -73,7 +81,8 @@ function checkGameOver(i, j) {
 
   }
   if (gLevel.LIVES === 0) {
-    elModal.innerHTML = 'You lost'
+    revealMines()
+    elModal.innerHTML = 'You LOST'
     elModal.style.display = 'block'
     gGame.isOn = false
     manageSmiley(DEAD)
@@ -104,17 +113,22 @@ function manageSmiley(emoji) {
 function manageDifficulty(elBtn) {
 
   gLevel.SIZE = elBtn
+  if (gLevel.SIZE === 6) {
+    gGame.manuallyCreateMode = true
+    document.querySelector('.manual').style.display = 'block'
+  }
   gGame.isOn = false
   resetStats()
   onInit()
 
 }
 
-function getDiffucaltyLevel(){
+function getDiffucaltyLevel() {
 
-  if(gLevel.SIZE === 4) return "Easy"
-  else if(gLevel.SIZE === 8) return "Medium"
-  else if(gLevel.SIZE === 12) return "Hard"
+  if (gLevel.SIZE === 4) return "Easy"
+  else if (gLevel.SIZE === 8) return "Medium"
+  else if (gLevel.SIZE === 12) return "Hard"
+  else if (gLevel.SIZE === 6) return "Manually"
 
 }
 
@@ -141,14 +155,29 @@ function hints(elImg) { // change to manageHints()
 
 }
 
+function safeClick() {
+
+  if (!gLevel.SAFECLICK) return
+
+  document.querySelector('span').innerHTML = --gLevel.SAFECLICK
+
+  const emptyPos = getEmptyPos()
+  renderCell(emptyPos, FLAG, 'coverd')
+
+  setTimeout(() => {
+    renderCell(emptyPos, '', 'coverd')
+  }, 1000);
+
+}
+
 function timer(init = 0) {
   //crappy timer need to improve
   var sec = init;
+  var clock = document.querySelector('.clock')
   timerId = setInterval(function () {
     sec += 1;
-    document.querySelector('.clock').innerHTML = sec;
+    clock.innerHTML = 'TIME : ' + sec;
     finalScore++
-    console.log(finalScore)
   }, 1000);
 
 
@@ -157,28 +186,28 @@ function timer(init = 0) {
 function saveHighScore(score) {
 
   var difficultyLevel = getDiffucaltyLevel()
-  if (typeof(Storage) !== "undefined") {
+  if (typeof (Storage) !== "undefined") {
     var existingHighScore = localStorage.getItem(difficultyLevel);
     var displayHighScore = document.querySelector('.best_score')
     if (existingHighScore === null || score > parseInt(existingHighScore)) {
-      localStorage.setItem( difficultyLevel, score);
-      console.log("New high score reached: " + difficultyLevel +'=>' + score);
+      localStorage.setItem(difficultyLevel, score);
+      console.log("New high score reached: " + difficultyLevel + '=>' + score);
     } else {
       console.log("Score is not higher than the existing high score.");
     }
   } else {
     console.log("Local storage is not supported.");
   }
-   
+
   displayHighScore.innerHTML = 'Best score : ' + existingHighScore
 
 }
 
 function initializeHighScore() {
   var difficultyLevel = getDiffucaltyLevel()
-  if (typeof(Storage) !== "undefined") {
+  if (typeof (Storage) !== "undefined") {
     var existingHighScore = localStorage.getItem(difficultyLevel);
-    
+
     if (existingHighScore === null) {
       localStorage.setItem(difficultyLevel, 0);
     }
@@ -186,3 +215,4 @@ function initializeHighScore() {
     console.log("Local storage is not supported.");
   }
 }
+

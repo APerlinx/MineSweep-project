@@ -21,10 +21,9 @@ function createBoard(rows = gLevel.SIZE, cols = gLevel.SIZE) {
 
             board[i][j] = cell
 
-
         }
     }
-    board[0][0].isMine = true
+    // board[0][0].isMine = true
     // board[1][1].isMine = true
     return board
 }
@@ -81,13 +80,22 @@ function setMinesNegsCount(board, rowIdx, colIdx) {
 function onCellClicked(elCell, i, j) {
 
     const cell = gBoard[i][j]
-    console.log('Left Click')
 
     if (gGame.isOn === false) return
-    if (gGame.hintIson && gFirstClick) {
+    if (gGame.hintIson && gFirstClick) {// For hints !
         hintReveal(gBoard, i, j)
         gGame.hintIson = false
         return
+    }
+    if (gGame.manuallyCreateMode) { // Manual Mode !
+        manuallyCreate(elCell , i , j)
+        gCountMinesforManually--
+        document.querySelector('.manual span').innerHTML = gCountMinesforManually
+         if (!gCountMinesforManually){
+          gGame.manuallyCreateMode = false
+          document.querySelector('.manual').style.display = 'none'
+         }
+         return
     }
 
     if (!cell.isMine) {
@@ -96,10 +104,8 @@ function onCellClicked(elCell, i, j) {
         gGame.shownCount++
         cell.isShown = true
         elCell.classList.add('shown')
-        if (!gFirstClick) {
-            manageFirstClick(i,j)
-        }
-        if (cell.minesAroundCount) elCell.innerHTML = cell.minesAroundCount
+        if (!gFirstClick) manageFirstClick(i, j)
+        if (cell.minesAroundCount) renderCell({ i, j }, cell.minesAroundCount, 'shown')
         else expandShown(gBoard, elCell, i, j)
     } else if (!cell.isMarked) {
         elCell.classList.add('mine')
@@ -107,8 +113,8 @@ function onCellClicked(elCell, i, j) {
         cell.isShown = true
     }
 
-
-    checkGameOver(i, j)
+    if(!gGame.manuallyCreateMode) checkGameOver(i, j)
+    
 }
 
 function onCellMarked(event, elCell, i, j) {
@@ -145,8 +151,6 @@ function createMines(iOFCell, jOfCell) {
     }
 }
 
-
-
 function expandShown(board, elCell, rowIdx, colIdx) {
 
     // if (board[rowIdx][colIdx] > 0) return
@@ -157,10 +161,14 @@ function expandShown(board, elCell, rowIdx, colIdx) {
             if (i === rowIdx && j === colIdx) continue
             if (j < 0 || j >= board[0].length) continue
             var currCell = board[i][j]
-            if (!currCell.minesAroundCount) {
+            if (currCell.isMine || currCell.isShown || currCell.isMarked) {
+                continue
+            } else {
                 gGame.shownCount++
                 currCell.isShown = true
-                renderCell({ i, j }) // add shown class to the relevant cells
+                expandShown(board, elCell, i, j)
+                renderCell({ i, j }, currCell.minesAroundCount, 'shown')
+
 
             }
 
@@ -178,7 +186,7 @@ function hintReveal(board, rowIdx, colIdx) {
         for (var j = colIdx - 1; j <= colIdx + 1; j++) {
             if (j < 0 || j >= board[0].length) continue
             if (board[i][j].isShown) continue
-            console.log('Enterd hint reveal')
+
             if (board[i][j].isMarked) return
             renderRevealedCell({ i, j }, i, j)
         }
@@ -186,12 +194,29 @@ function hintReveal(board, rowIdx, colIdx) {
     }
 }
 
-function manageFirstClick(i,j) {
+function manageFirstClick(i, j) {
+
+    gFirstClick = true
     createMines(i, j)
     updateNegsCount()
     timer(0)
-    gFirstClick = true
+    
+}
 
+function manuallyCreate(elCell ,i, j) {
+   
+    elCell.innerHTML = MINE
+    elCell.classList.add('mine')
+    gBoard[i][j].isMine = true  
+    updateNegsCount()
+    gBoard[i][j].isShown = true
+    setTimeout(() => {
+        gBoard[i][j].isShown = false
+        elCell.innerHTML = ''
+        elCell.classList.remove('mine')
+    }, 3000);
+    
+    
 }
 
 function randMinePlacer(gLevelSIZE, Currcell) {
@@ -202,7 +227,7 @@ function randMinePlacer(gLevelSIZE, Currcell) {
     // Medium :
     // Hard :
 
-    const probabilty = 10 / Math.pow(gLevelSIZE, 2)
+    const probabilty = 11 / Math.pow(gLevelSIZE, 2)
 
     if (Math.random() > probabilty) {
         Currcell.isMine = true
@@ -210,3 +235,18 @@ function randMinePlacer(gLevelSIZE, Currcell) {
     }
 
 }
+
+function revealMines() {
+
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard.length; j++) {
+            const cell = gBoard[i][j]
+
+            if (cell.isMine) revealMineCells({ i, j })
+
+        }
+
+    }
+
+}
+
