@@ -6,7 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css" />
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Mine-Sweep</title>
 </head>
 
 <body onload="onInit()">
@@ -26,16 +29,21 @@
     <div class="lives"></div>
 
     <div class="lighbulbs">
-        <img onclick="hints(this)" id="lightbulb1" src="img/lightbulb.png" style="padding:0.5px;">
-        <img onclick="hints(this)" id="lightbulb2" src="img/lightbulb.png" style="padding:0.5px;">
-        <img onclick="hints(this)" id="lightbulb3" src="img/lightbulb.png" style="padding:0.5px;">
-    </div class="safeclick">
-    <button onclick="safeClick()">Safe click</button> 
+        
+        <img onclick="manageHints(this)" id="lightbulb1" src="img/lightbulb.png" style="padding:0.5px;">
+        <img onclick="manageHints(this)" id="lightbulb2" src="img/lightbulb.png" style="padding:0.5px;">
+        <img onclick="manageHints(this)" id="lightbulb3" src="img/lightbulb.png" style="padding:0.5px;">
+        <span>Hints:</span>
+    </div>
+    <button class="safeclick" onclick="safeClick()">Safe click</button> 
     <p><span>3</span> click available</p>
     </div>
+
+    <button onclick="undoMove()">Undo</button>
     <div class="clock"></div>
     <div class="best_score"> </div>
-    <div>
+
+    
    
     <footer>Alon Perlin</footer>
 

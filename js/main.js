@@ -32,7 +32,8 @@ var gFirstClick
 var timerId
 var hintIntervalId
 var finalScore
-var gCountMinesforManually 
+var gCountMinesforManually
+var gMoveMemoryArray 
 
 
 function onInit() {
@@ -41,6 +42,7 @@ function onInit() {
   gFirstClick = false
   finalScore = 0 // for Best Score task
   gCountMinesforManually = 10 // for Manually positioned mines task -> board.js
+  gMoveMemoryArray = [] // for undo task
   gBoard = createBoard()
   renderBoard(gBoard)
   manageLives()
@@ -145,13 +147,11 @@ function resetStats() {
 
 }
 
-function hints(elImg) { // change to manageHints()
+function manageHints(elImg) { 
 
   elImg.style.backgroundColor = '#111'
   gLevel.HINTS--
   gGame.hintIson = true
-
-
 
 }
 
@@ -159,7 +159,7 @@ function safeClick() {
 
   if (!gLevel.SAFECLICK) return
 
-  document.querySelector('span').innerHTML = --gLevel.SAFECLICK
+  document.querySelector('p span').innerHTML = --gLevel.SAFECLICK
 
   const emptyPos = getEmptyPos()
   renderCell(emptyPos, FLAG, 'coverd')
@@ -167,6 +167,18 @@ function safeClick() {
   setTimeout(() => {
     renderCell(emptyPos, '', 'coverd')
   }, 1000);
+
+}
+
+function undoMove(){
+
+if(gMoveMemoryArray.length === 0) return
+
+var prevMove = gMoveMemoryArray.pop()
+gBoard = copyBoard(prevMove)
+
+updateNegsCount()
+renderBoard(gBoard)
 
 }
 
@@ -215,4 +227,6 @@ function initializeHighScore() {
     console.log("Local storage is not supported.");
   }
 }
+
+
 

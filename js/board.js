@@ -82,20 +82,21 @@ function onCellClicked(elCell, i, j) {
     const cell = gBoard[i][j]
 
     if (gGame.isOn === false) return
+    saveMoveState(cell, i, j)
     if (gGame.hintIson && gFirstClick) {// For hints !
         hintReveal(gBoard, i, j)
         gGame.hintIson = false
         return
     }
     if (gGame.manuallyCreateMode) { // Manual Mode !
-        manuallyCreate(elCell , i , j)
+        manuallyCreate(elCell, i, j)
         gCountMinesforManually--
         document.querySelector('.manual span').innerHTML = gCountMinesforManually
-         if (!gCountMinesforManually){
-          gGame.manuallyCreateMode = false
-          document.querySelector('.manual').style.display = 'none'
-         }
-         return
+        if (!gCountMinesforManually) {
+            gGame.manuallyCreateMode = false
+            document.querySelector('.manual').style.display = 'none'
+        }
+        return
     }
 
     if (!cell.isMine) {
@@ -113,8 +114,8 @@ function onCellClicked(elCell, i, j) {
         cell.isShown = true
     }
 
-    if(!gGame.manuallyCreateMode) checkGameOver(i, j)
-    
+    if (!gGame.manuallyCreateMode) checkGameOver(i, j)
+
 }
 
 function onCellMarked(event, elCell, i, j) {
@@ -200,14 +201,14 @@ function manageFirstClick(i, j) {
     createMines(i, j)
     updateNegsCount()
     timer(0)
-    
+
 }
 
-function manuallyCreate(elCell ,i, j) {
-   
+function manuallyCreate(elCell, i, j) {
+
     elCell.innerHTML = MINE
     elCell.classList.add('mine')
-    gBoard[i][j].isMine = true  
+    gBoard[i][j].isMine = true
     updateNegsCount()
     gBoard[i][j].isShown = true
     setTimeout(() => {
@@ -215,8 +216,8 @@ function manuallyCreate(elCell ,i, j) {
         elCell.innerHTML = ''
         elCell.classList.remove('mine')
     }, 3000);
-    
-    
+
+
 }
 
 function randMinePlacer(gLevelSIZE, Currcell) {
@@ -250,3 +251,24 @@ function revealMines() {
 
 }
 
+function copyBoard(board) {
+    var copy = [];
+    for (var i = 0; i < board.length; i++) {
+      copy[i] = [];
+      for (var j = 0; j < board[0].length; j++) {
+        var cell = board[i][j];
+        copy[i][j] = {
+          minesAroundCount: cell.minesAroundCount,
+          isShown: cell.isShown,
+          isMarked: cell.isMarked,
+          isMine: cell.isMine
+        };
+      }
+    }
+    return copy;
+  }
+  
+  function saveMoveState() {
+    var state = copyBoard(gBoard)
+    gMoveMemoryArray.push(state)
+  }
