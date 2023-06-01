@@ -21,6 +21,8 @@ td {
     margin-right: auto;
     margin-top: 150px;
     box-shadow: 0 0 0 1px #163772 inset,0 0 0 2px rgba(255, 255, 255, 0.15) inset,0 4px 0 0      #08D9D1,0 4px 0 1px #FF2E63,0 4px 4px 1px #FF2E63;
+    
+    
 }
 
 
@@ -28,7 +30,7 @@ td {
 
     border: 1px solid white;
     background-color: grey;
-
+    
 }
 
 .shown {
@@ -95,8 +97,8 @@ button {
 .clock{
 
     position: relative;
-    text-align: center;
-    margin: 5%;
+   
+    
 }
 
 #lightbulb1{

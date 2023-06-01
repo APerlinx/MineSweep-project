@@ -15,3 +15,36 @@ function renderCell(location) {
   elCell.classList.add('shown')
 }
   
+function renderRevealedCell(location,i,j){
+
+  const elCell = document.querySelector(`.cell-${location.i}-${location.j}`)
+  
+  if(gBoard[i][j].isMine){ //Deals with mines
+ 
+    elCell.classList.add('mine')
+    elCell.innerHTML = MINE
+    setTimeout(() => {
+      elCell.classList.remove('mine')
+    elCell.innerHTML = ''
+    }, 1000);
+
+  } else{ //Deals with the rest
+
+    elCell.classList.add('shown')
+    if(gBoard[i][j].minesAroundCount !== 0 ){
+    elCell.innerHTML = gBoard[i][j].minesAroundCount
+    } else  elCell.innerHTML = ''
+    setTimeout(() => {
+      elCell.classList.remove('shown')
+    elCell.innerHTML = ''
+    }, 1000);
+  }
+
+
+}
+
+function  clearStorage(){
+  localStorage.removeItem("Easy")
+  localStorage.removeItem("Medium")
+  localStorage.removeItem("Hard")
+}

@@ -20,11 +20,11 @@ function createBoard(rows = gLevel.SIZE, cols = gLevel.SIZE) {
             }
 
             board[i][j] = cell
-          
+
 
         }
     }
-    // board[0][0].isMine = true
+    board[0][0].isMine = true
     // board[1][1].isMine = true
     return board
 }
@@ -45,7 +45,7 @@ function renderBoard(board) {
     }
     strHTML += '</tbody></table>'
 
-   
+
     const elContainer = document.querySelector('.board')
     elContainer.innerHTML = strHTML
 
@@ -84,6 +84,12 @@ function onCellClicked(elCell, i, j) {
     console.log('Left Click')
 
     if (gGame.isOn === false) return
+    if (gGame.hintIson && gFirstClick) {
+        hintReveal(gBoard, i, j)
+        gGame.hintIson = false
+        return
+    }
+
     if (!cell.isMine) {
         if (cell.isShown) return
         if (cell.isMarked) return
@@ -91,10 +97,7 @@ function onCellClicked(elCell, i, j) {
         cell.isShown = true
         elCell.classList.add('shown')
         if (!gFirstClick) {
-            createMines(i,j)
-            updateNegsCount()
-            timer()
-            gFirstClick = true
+            manageFirstClick(i,j)
         }
         if (cell.minesAroundCount) elCell.innerHTML = cell.minesAroundCount
         else expandShown(gBoard, elCell, i, j)
@@ -103,7 +106,8 @@ function onCellClicked(elCell, i, j) {
         elCell.innerHTML = MINE
         cell.isShown = true
     }
- 
+
+
     checkGameOver(i, j)
 }
 
@@ -130,13 +134,13 @@ function onCellMarked(event, elCell, i, j) {
     checkGameOver(i, j)
 }
 
-function createMines(iOFCell,jOfCell) {
-   var rows = gLevel.SIZE
-   var cols = gLevel.SIZE
+function createMines(iOFCell, jOfCell) {
+    var rows = gLevel.SIZE
+    var cols = gLevel.SIZE
     for (var i = 0; i < rows; i++) {
         for (var j = 0; j < cols; j++) {
-            if(i === iOFCell && j === jOfCell) continue
-            randMinePlacer(gLevel.SIZE, gBoard[i][j] )
+            if (i === iOFCell && j === jOfCell) continue
+            randMinePlacer(gLevel.SIZE, gBoard[i][j])
         }
     }
 }
@@ -145,8 +149,8 @@ function createMines(iOFCell,jOfCell) {
 
 function expandShown(board, elCell, rowIdx, colIdx) {
 
-    if (board[rowIdx][colIdx] > 0) return
-  
+    // if (board[rowIdx][colIdx] > 0) return
+
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
         if (i < 0 || i >= board.length) continue
         for (var j = colIdx - 1; j <= colIdx + 1; j++) {
@@ -166,14 +170,39 @@ function expandShown(board, elCell, rowIdx, colIdx) {
 
 }
 
+function hintReveal(board, rowIdx, colIdx) {
+
+
+    for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+        if (i < 0 || i >= board.length) continue
+        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+            if (j < 0 || j >= board[0].length) continue
+            if (board[i][j].isShown) continue
+            console.log('Enterd hint reveal')
+            if (board[i][j].isMarked) return
+            renderRevealedCell({ i, j }, i, j)
+        }
+
+    }
+}
+
+function manageFirstClick(i,j) {
+    createMines(i, j)
+    updateNegsCount()
+    timer(0)
+    gFirstClick = true
+
+}
+
 function randMinePlacer(gLevelSIZE, Currcell) {
 
     //Probabilty depends on the game difficulty
-    // Easy : probabilty == 12/16
+    // calculate proper probabilty later
+    // Easy : probabilty = 10/16
     // Medium :
     // Hard :
 
-    const probabilty = 12 / Math.pow(gLevelSIZE, 2)
+    const probabilty = 10 / Math.pow(gLevelSIZE, 2)
 
     if (Math.random() > probabilty) {
         Currcell.isMine = true
