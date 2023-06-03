@@ -13,43 +13,55 @@
 </head>
 
 <body onload="onInit()">
-    <h1>MineSweep</h1>
-<div class="smiley"></div>
-    <div class="diffuclty-mode">
-        <button onclick="manageDifficulty(4)">Easy</button>
-        <button onclick="manageDifficulty(8)">Medium</button>
-        <button onclick="manageDifficulty(12)">Hard</button>
-        <button onclick="manageDifficulty(6)">Manually</button>
-    </div>
-    <button class="manual">Manual Mode is 0n please place <span>10</span> more mines</button>
-    <table class="board"> </table>
 
+    <h1>MineSweep</h1>
+    <div class="game">
+        <div class="smiley" onclick="restartGame()"></div>
+        <div class="diffuclty-mode">
+            <button onclick="manageDifficulty(4)">Easy</button>
+            <button onclick="manageDifficulty(8)">Medium</button>
+            <button onclick="manageDifficulty(12)">Hard</button>
+            <button onclick="manageDifficulty(6)">Manually</button>
+        </div>
+
+        <table class="board"> </table>
+    </div>
+    <div class="lighbulbs">
+        <span>Hints:</span>
+        <img onclick="manageHints(this)" id="lightbulb1" src="./img/lightbulb1.gif">
+        <img onclick="manageHints(this)" id="lightbulb2" src="./img/lightbulb1.gif">
+        <img onclick="manageHints(this)" id="lightbulb3" src="./img/lightbulb1.gif">
+    </div>
+    <div class="lives"></div>
+    <div class="best_score"> </div>
+    <div class="display">
+        <div id="clock">TIME:0</div>
+        <div id="minescount">MINES:0</div>
+    </div>
+
+    <div class="helpmenu">
+        <button onclick="mineExterminator()">Mine Exterminator</button>
+        <button onclick="manageMegaHint()" id="megahint">Mega hint</button>
+
+        <div class="safeclickbox">
+            <button class="safeclick" onclick="safeClick()">Safe click</button>
+            <p><span>3</span> click available</p>
+        </div>
+
+        <button onclick="undoMove()" id="undobutton">Undo</button>
+
+    </div>
+
+    <div class="manual">Manual Mode is 0n please place <span>10</span> more mines</div>
+    
     <div class="modal"></div>
 
-    <div class="lives"></div>
-
-    <div class="lighbulbs">
-        
-        <img onclick="manageHints(this)" id="lightbulb1" src="img/lightbulb.png" style="padding:0.5px;">
-        <img onclick="manageHints(this)" id="lightbulb2" src="img/lightbulb.png" style="padding:0.5px;">
-        <img onclick="manageHints(this)" id="lightbulb3" src="img/lightbulb.png" style="padding:0.5px;">
-        <span>Hints:</span>
-    </div>
-    <button class="safeclick" onclick="safeClick()">Safe click</button> 
-    <p><span>3</span> click available</p>
-    </div>
-
-    <button onclick="undoMove()">Undo</button>
-    <div class="clock"></div>
-    <div class="best_score"> </div>
-
-    
-   
-    <footer>Alon Perlin</footer>
+    <footer>By Alon Perlin</footer>
 
     <script src="js/main.js"></script>
     <script src="js/board.js"></script>
     <script src="js/util.js"></script>
+
 </body>
 
 </html>

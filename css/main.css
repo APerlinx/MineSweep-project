@@ -1,4 +1,3 @@
-
 .colors {
 
     --clr1: #111;
@@ -12,17 +11,27 @@
 
 }
 
-
-
 h1 {
     text-align: center;
 }
 
-body {
+html,
+body,
+#wrapper {
+
     background: #111;
     font-family: Arial, Helvetica, sans-serif;
     color: white;
     font-family: 'Press Start 2P', cursive;
+    width: 100%;
+    min-height: 100%;
+
+}
+
+.game {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 table,
@@ -36,23 +45,28 @@ td {
     font-size: 30px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 80px;
-    box-shadow: 0 0 0 1px #163772 inset,0 0 0 2px rgba(255, 255, 255, 0.15) inset,0 4px 0 0      #08D9D1,0 4px 0 1px #FF2E63,0 4px 4px 1px #FF2E63;
-    
-    
+   
+    box-shadow: 0 0 0 1px #163772 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 4px 0 0 #08D9D1, 0 4px 0 1px #FF2E63, 0 4px 4px 1px #FF2E63;
+
+
 }
 
 
 td {
 
     border: 1px solid white;
-    background-color: grey;
-    
+    background-color: rgba(255, 255, 255, 0.15);
+
+}
+
+.helpmenu {
+
+    text-align: center;
 }
 
 .coverd {
 
-    background-color: grey;
+    text-align: center;
 }
 
 
@@ -68,10 +82,10 @@ td {
 
 footer {
 
-    text-align:end;
-    margin-top: 17px;
+    text-align:right;
     font-size: large;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-right: 20px;
+   
 }
 
 .modal {
@@ -89,20 +103,19 @@ footer {
 
 .lives {
 
-    text-align: center;
     height: 30px;
-    width: 200px;
-    margin: auto;
-    margin-top: 2%;
-    padding: 1%;
+    width: 250px;
+    padding-left: 5px;
+    margin-top: 1%
+    
 }
 
 .diffuclty-mode {
 
-    margin-left: 38.5%;
     text-align: center;
-    position: absolute;
-    
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 .smiley {
@@ -115,66 +128,51 @@ footer {
 }
 
 button {
-
-    box-shadow: 0 0 0 1px #163772 inset,0 0 0 2px rgba(255, 255, 255, 0.15) inset,0 4px 0 0      #08D9D1,0 4px 0 1px #FF2E63,0 4px 4px 1px #FF2E63;
+    
+    box-shadow: 0 0 0 1px #163772 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 4px 0 0 #08D9D1, 0 4px 0 1px #FF2E63, 0 4px 4px 1px #FF2E63;
     margin-bottom: 1%;
     font-family: 'Press Start 2P', cursive;
 }
 
-.clock{
-
-    padding-top: 0.5%;
-    margin-left: 37%;
-    display: inline;
-
+#lightbulb1 {
+    
    
-    
-}
-
-#lightbulb1{
-    position: absolute;
-    height: 30px;
-    width: 20px;
-    margin-left: 55%;
-    background-color: yellow;
-    display: inline;
-    
-}
-
-#lightbulb2{
-    position: absolute;
-    height: 30px;
-    width: 20px;
-    margin-left: 53%;
-    background-color: yellow;
-    display: inline;
-    
-}
-
-#lightbulb3{
-    position: absolute;
-    height: 30px;
-    width: 20px;
-    margin-left: 51%;
-    background-color: yellow;
-    display: inline;
+    width: 30px;
     
     
 }
 
-p{
+#lightbulb2 {
+   
+   
+    width: 30px;
+    
+    
+}
+
+#lightbulb3 {
+    
+    
+    width: 30px;
+   
+   
+
+}
+
+p {
     font-size: 10px;
-    position: relative;
-    display: block;
-    
-    
 }
 
-.safeclick{
-    
-    display: block;
-    margin-bottom: 10px;
-    
+.safeclickbox {
+
+text-align: center;
+
+
+}
+
+#undobutton {
+
+    text-align: center;
 }
 
 .manual {
@@ -182,11 +180,57 @@ p{
     display: none;
 }
 
-.lighbulbs span{
+.lighbulbs {
+  
+    padding-bottom: 5px;
+    padding-left: 5px;
+    margin-top: 1%
+  
+}
 
-    font-size: 16px;
-    display: inline;
-    margin-left: 43.5%;
+.display {
+
+    width: 20%;
+    min-height: 10%;
+    height: 30px;
+    background-color: #111;
+    margin-top: 1%;
     
 }
 
+#clock {
+
+    height: 40px;
+    background-color: #111;
+    padding-left: 5px;
+    vertical-align: middle;
+   line-height: 40px;
+    
+}
+
+#minescount {
+
+    height: 40px;
+    background-color: #111;
+    padding-left: 5px;
+    vertical-align: middle;
+    line-height: 40px;
+    
+}
+
+.best_score {
+    padding-left: 5px;
+    margin-top: 1%
+}
+
+#mine_img {
+
+    width: 100px;
+    height: auto;
+}
+
+#heart_img {
+
+    width: 30px;
+    height: auto;
+}

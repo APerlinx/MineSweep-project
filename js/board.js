@@ -1,7 +1,7 @@
 'use strict'
 
 var gBoard
-const MINE = '☠️'
+const MINE = '<img src="./img/mine.jpg" id="mine_img">'
 const FLAG = '🚩'
 const EMPTY = ''
 
@@ -82,7 +82,15 @@ function onCellClicked(elCell, i, j) {
     const cell = gBoard[i][j]
 
     if (gGame.isOn === false) return
-    saveMoveState(cell, i, j)
+    clearInterval(dotInterValid) 
+
+    if (gGame.megaHintIsOn) {
+        manageMegaHint({ i, j })
+        gCountMegaHint--
+        if (gCountMegaHint > 0) return
+        else return gGame.megaHintIsOn = false
+    }
+
     if (gGame.hintIson && gFirstClick) {// For hints !
         hintReveal(gBoard, i, j)
         gGame.hintIson = false
@@ -112,8 +120,10 @@ function onCellClicked(elCell, i, j) {
         elCell.classList.add('mine')
         elCell.innerHTML = MINE
         cell.isShown = true
+        gGame.mineCount--
     }
-
+    saveMoveState(elCell, cell, i, j)
+    manageMinesCount()
     if (!gGame.manuallyCreateMode) checkGameOver(i, j)
 
 }
@@ -138,6 +148,7 @@ function onCellMarked(event, elCell, i, j) {
         cell.isMarked = true
         gGame.markedCount++
     }
+    manageMinesCount()
     checkGameOver(i, j)
 }
 
@@ -189,10 +200,28 @@ function hintReveal(board, rowIdx, colIdx) {
             if (board[i][j].isShown) continue
 
             if (board[i][j].isMarked) return
-            renderRevealedCell({ i, j }, i, j)
+            renderRevealedCell({ i, j }, i, j,1000)
         }
 
     }
+}
+
+function megaHint(array) {
+
+    const cell2 = array.pop()
+    const cell1 = array.pop()
+   
+    for (var i = cell1.i; i <= cell2.i; i++) {
+        // if (i < 0 || i >= board.length) continue
+        for (var j = cell1.j; j <= cell2.j; j++) {
+            // if (j < 0 || j >= gBoard[0].length) continue
+            if (gBoard[i][j].isShown) continue
+            if (gBoard[i][j].isMarked) continue
+            renderRevealedCell({ i, j }, i, j,2000)
+        }
+
+    }
+    gGame.megaHintIsOn = false
 }
 
 function manageFirstClick(i, j) {
@@ -200,7 +229,9 @@ function manageFirstClick(i, j) {
     gFirstClick = true
     createMines(i, j)
     updateNegsCount()
+    manageMinesCount()
     timer(0)
+    console.log(gGame)
 
 }
 
@@ -251,24 +282,41 @@ function revealMines() {
 
 }
 
-function copyBoard(board) {
-    var copy = [];
-    for (var i = 0; i < board.length; i++) {
-      copy[i] = [];
-      for (var j = 0; j < board[0].length; j++) {
-        var cell = board[i][j];
-        copy[i][j] = {
-          minesAroundCount: cell.minesAroundCount,
-          isShown: cell.isShown,
-          isMarked: cell.isMarked,
-          isMine: cell.isMine
-        };
-      }
+function saveMoveState(elCell, cell, i, j) {
+
+    const currMove = {
+        cellIndex: cell,
+        cellInfo: elCell,
+        location: { i, j }
     }
-    return copy;
-  }
-  
-  function saveMoveState() {
-    var state = copyBoard(gBoard)
-    gMoveMemoryArray.push(state)
-  }
+
+    gMoveMemoryArray.push(currMove)
+
+}
+
+function reverseExpandShown(board, rowIdx, colIdx) {
+
+    for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+        if (i < 0 || i >= board.length) continue
+        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+            if (i === rowIdx && j === colIdx) continue
+            if (j < 0 || j >= board[0].length) continue
+            const elCell = document.querySelector(`.cell-${rowIdx}-${colIdx}`)
+            var currCell = board[i][j]
+            if (!currCell.isShown || currCell.isMine) {
+                continue
+            } else {
+                elCell.classList.remove('shown')
+                gGame.shownCount--
+                currCell.isShown = false
+                reverseExpandShown(board, i, j)
+                renderCell({ i, j }, '')
+
+
+            }
+
+        }
+
+    }
+
+}

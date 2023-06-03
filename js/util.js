@@ -24,7 +24,7 @@ function revealMineCells(location) {
   elCell.innerHTML = MINE
 }
 
-function renderRevealedCell(location, i, j) {
+function renderRevealedCell(location, i, j,time) {
 
   const elCell = document.querySelector(`.cell-${location.i}-${location.j}`)
 
@@ -35,7 +35,7 @@ function renderRevealedCell(location, i, j) {
     setTimeout(() => {
       elCell.classList.remove('mine')
       elCell.innerHTML = ''
-    }, 1000);
+    }, time);
 
   } else { //Deals with the rest
 
@@ -46,7 +46,7 @@ function renderRevealedCell(location, i, j) {
     setTimeout(() => {
       elCell.classList.remove('shown')
       elCell.innerHTML = ''
-    }, 1000);
+    }, time);
   }
 
 
@@ -70,4 +70,21 @@ function getEmptyPos() {
   }
   var randIdx = getRandomIntInclusive(0, emptyPoss.length)
   return emptyPoss[randIdx]
+}
+
+function copyBoard(board) {
+  var copy = [];
+  for (var i = 0; i < board.length; i++) {
+      copy[i] = [];
+      for (var j = 0; j < board[0].length; j++) {
+          var cell = board[i][j];
+          copy[i][j] = {
+              minesAroundCount: cell.minesAroundCount,
+              isShown: cell.isShown,
+              isMarked: cell.isMarked,
+              isMine: cell.isMine
+          };
+      }
+  }
+  return copy;
 }

@@ -1,7 +1,7 @@
 'use strict'
 
 
-const LIFE = '💓'
+const LIFE = '<img src="./img/heart.gif" id="heart_img">'
 const NORMAL = '😀'
 const DEAD = '😒'
 const WON = '😎'
@@ -13,7 +13,8 @@ const gLevel = {
   MINES: 2,
   LIVES: 3,
   HINTS: 3,
-  SAFECLICK: 3
+  SAFECLICK: 3,
+  MEGAHINTS: 1
 }
 
 const gGame = {
@@ -21,6 +22,7 @@ const gGame = {
   hintIson: false,
   safeClickIson: false,
   manuallyCreateMode: false,
+  megaHintIsOn: false,
   shownCount: 0,
   markedCount: 0,
   secsPassed: 0,
@@ -31,10 +33,12 @@ const gGame = {
 var gFirstClick
 var timerId
 var hintIntervalId
+var dotInterValid
 var finalScore
 var gCountMinesforManually
-var gMoveMemoryArray 
-
+var gMoveMemoryArray
+var gCountMegaHint
+var gMegaHintArray
 
 function onInit() {
 
@@ -43,17 +47,16 @@ function onInit() {
   finalScore = 0 // for Best Score task
   gCountMinesforManually = 10 // for Manually positioned mines task -> board.js
   gMoveMemoryArray = [] // for undo task
+  gMegaHintArray = [] // for mega hint function
+  gCountMegaHint = 2
   gBoard = createBoard()
   renderBoard(gBoard)
   manageLives()
   manageSmiley(NORMAL)
-  
   initializeHighScore()
   saveHighScore()
   var elModal = document.querySelector('.modal')
   elModal.style.display = 'none'
-  console.log(gGame.manuallyCreateMode)
-  
 
   // clearStorage()
   // localStorage.clear()
@@ -120,8 +123,7 @@ function manageDifficulty(elBtn) {
     document.querySelector('.manual').style.display = 'block'
   }
   gGame.isOn = false
-  resetStats()
-  onInit()
+  restartGame()
 
 }
 
@@ -134,29 +136,17 @@ function getDiffucaltyLevel() {
 
 }
 
-function resetStats() {
-
-  gGame.shownCount = 0
-  gGame.markedCount = 0
-  gGame.secsPassed = 0
-  gGame.mineCount = 0
-  gGame.markedMines = 0
-  gLevel.LIVES = 3
-
-  clearInterval(timerId)
-
-}
-
-function manageHints(elImg) { 
-
-  elImg.style.backgroundColor = '#111'
+function manageHints(elImg) {
+console.log(elImg)
+  elImg.src = './img/lightbulb2.png'
   gLevel.HINTS--
   gGame.hintIson = true
-
+//   width: 30px;
 }
 
 function safeClick() {
 
+  if (gGame.isOn === false) return
   if (!gLevel.SAFECLICK) return
 
   document.querySelector('p span').innerHTML = --gLevel.SAFECLICK
@@ -170,28 +160,125 @@ function safeClick() {
 
 }
 
-function undoMove(){
+function mineExterminator() {
 
-if(gMoveMemoryArray.length === 0) return
+  if (gGame.isOn === false) return
+  var count = 3
+  for (var i = 0; i < gBoard.length; i++) {
 
-var prevMove = gMoveMemoryArray.pop()
-gBoard = copyBoard(prevMove)
+    for (var j = 0; j < gBoard.length; j++) {
 
-updateNegsCount()
-renderBoard(gBoard)
+      const cell = gBoard[i][j]
+      if (cell.isMine && cell.isShown === false && cell.isMarked === false) {
+        if (!count) return
+        cell.isMine = false
+        gGame.mineCount--
+        updateNegsCount()
+        manageMinesCount()
+        count--
+      }
+
+    }
+
+  }
+
+}
+
+function manageMinesCount() {
+
+  var minesCount = gGame.mineCount - gGame.markedMines
+  var minesCountDisplay = document.querySelector('#minescount')
+  minesCountDisplay.innerHTML = 'Mines:'+ minesCount
+
+}
+
+function undoMove() {
+  // known bugs : 1.when empty cell clicked can't undo that move
+
+  if (gMoveMemoryArray.length === 0) return
+  if (gGame.isOn === false) return
+
+  var prevMove = gMoveMemoryArray.pop()
+
+
+
+  if (prevMove.cellIndex.isMine) {
+    prevMove.cellInfo.classList.remove('mine')
+    gGame.mineCount++
+    gLevel.LIVES++
+  } else {
+    prevMove.cellInfo.classList.remove('shown')
+    gGame.shownCount--
+
+    /*
+    if(!prevMove.cellIndex.minesAroundCount){
+      reverseExpandShown(gBoard, prevMove.location.i, prevMove.location.j)
+    }
+    */
+
+  }
+
+  prevMove.cellIndex.isShown = false
+  updateNegsCount()
+  manageMinesCount()
+  manageLives()
+  renderCell(prevMove.location, '')
 
 }
 
 function timer(init = 0) {
-  //crappy timer need to improve
+  // needed : timer with minutes and sec 
   var sec = init;
-  var clock = document.querySelector('.clock')
+  var clock = document.querySelector('#clock')
   timerId = setInterval(function () {
     sec += 1;
-    clock.innerHTML = 'TIME : ' + sec;
+    clock.innerHTML = 'TIME:' + sec;
     finalScore++
   }, 1000);
 
+
+}
+
+function darkMode() {
+
+  // After UI is complete
+
+}
+
+function manageMegaHint(location) {
+
+  if (!gFirstClick) return
+  gGame.megaHintIsOn = true
+  if (!location) return
+  gMegaHintArray.push(location)
+  if (gMegaHintArray.length === 2) megaHint(gMegaHintArray)
+
+}
+
+function restartGame() {
+
+  clearInterval(timerId)
+
+  gGame.isOn = false
+  gGame.shownCount = 0
+  gGame.markedCount = 0
+  gGame.secsPassed = 0
+  gGame.mineCount = 0
+  gGame.markedMines = 0
+  gLevel.LIVES = 3
+  gLevel.HINTS = 3
+  gLevel.SAFECLICK = 3
+  gLevel.MEGAHINTS = 1
+
+  document.querySelector('p span').innerHTML = gLevel.SAFECLICK
+  var strHTML = document.querySelector('#minescount')
+  strHTML.innerHTML = 'Calculating mines'
+  dotInterValid = setInterval(() => {
+    strHTML.innerHTML += '.'
+  }, 1000);
+  // Bug Alert : Hints background wont restore after restart
+
+  onInit()
 
 }
 
@@ -211,7 +298,7 @@ function saveHighScore(score) {
     console.log("Local storage is not supported.");
   }
 
-  displayHighScore.innerHTML = 'Best score : ' + existingHighScore
+  displayHighScore.innerHTML = 'Highscore: ' + existingHighScore
 
 }
 
