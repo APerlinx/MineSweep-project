@@ -274,7 +274,7 @@ function restartGame() {
   var strHTML = document.querySelector('#minescount')
   strHTML.innerHTML = 'Calculating mines'
   dotInterValid = setInterval(() => {
-    strHTML.innerHTML += '.'
+    strHTML.innerHTML = 'Now click on any cell'
   }, 1000);
   // Bug Alert : Hints background wont restore after restart
 

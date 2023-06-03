@@ -53,6 +53,7 @@ td {
     font-size: 30px;
     margin: 0 auto;
     box-shadow: 0 0 0 1px var(--clr3) inset, 0 0 0 2px var(--clr4) inset, 0 4px 0 0 var(--clr5), 0 4px 0 1px var(--clr6), 0 4px 4px 1px var(--clr6);
+    
 }
 
 td {
