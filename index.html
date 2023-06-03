@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/main2.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -14,14 +14,15 @@
 
 <body onload="onInit()">
 
+    <div class="wrapper">
     <h1>MineSweep</h1>
     <div class="game">
         <div class="smiley" onclick="restartGame()"></div>
         <div class="diffuclty-mode">
-            <button onclick="manageDifficulty(4)">Easy</button>
-            <button onclick="manageDifficulty(8)">Medium</button>
-            <button onclick="manageDifficulty(12)">Hard</button>
-            <button onclick="manageDifficulty(6)">Manually</button>
+            <button onclick="manageDifficulty(4)"><i>Easy</i></button>
+            <button onclick="manageDifficulty(8)"><i>Medium</i></button>
+            <button onclick="manageDifficulty(12)"><i>Hard</i></button>
+            <button onclick="manageDifficulty(6)"><i>Manually</i></button>
         </div>
 
         <table class="board"> </table>
@@ -40,23 +41,24 @@
     </div>
 
     <div class="helpmenu">
-        <button onclick="mineExterminator()">Mine Exterminator</button>
-        <button onclick="manageMegaHint()" id="megahint">Mega hint</button>
-
+        <button onclick="mineExterminator()"><i>Mine Exterminator</i></button>
+        <button onclick="manageMegaHint()" id="megahint"><i>Mega hint</i></button>
+        <button onclick="undoMove()" id="undobutton"><i>Undo</i></button>
         <div class="safeclickbox">
             <button class="safeclick" onclick="safeClick()">Safe click</button>
             <p><span>3</span> click available</p>
         </div>
 
-        <button onclick="undoMove()" id="undobutton">Undo</button>
+
 
     </div>
 
     <div class="manual">Manual Mode is 0n please place <span>10</span> more mines</div>
-    
+
     <div class="modal"></div>
 
     <footer>By Alon Perlin</footer>
+</div>
 
     <script src="js/main.js"></script>
     <script src="js/board.js"></script>

@@ -82,7 +82,7 @@ function onCellClicked(elCell, i, j) {
     const cell = gBoard[i][j]
 
     if (gGame.isOn === false) return
-    clearInterval(dotInterValid) 
+    clearInterval(dotInterValid)
 
     if (gGame.megaHintIsOn) {
         manageMegaHint({ i, j })
@@ -200,7 +200,7 @@ function hintReveal(board, rowIdx, colIdx) {
             if (board[i][j].isShown) continue
 
             if (board[i][j].isMarked) return
-            renderRevealedCell({ i, j }, i, j,1000)
+            renderRevealedCell({ i, j }, i, j, 1000)
         }
 
     }
@@ -210,14 +210,14 @@ function megaHint(array) {
 
     const cell2 = array.pop()
     const cell1 = array.pop()
-   
+
     for (var i = cell1.i; i <= cell2.i; i++) {
         // if (i < 0 || i >= board.length) continue
         for (var j = cell1.j; j <= cell2.j; j++) {
             // if (j < 0 || j >= gBoard[0].length) continue
             if (gBoard[i][j].isShown) continue
             if (gBoard[i][j].isMarked) continue
-            renderRevealedCell({ i, j }, i, j,2000)
+            renderRevealedCell({ i, j }, i, j, 2000)
         }
 
     }
@@ -253,13 +253,12 @@ function manuallyCreate(elCell, i, j) {
 
 function randMinePlacer(gLevelSIZE, Currcell) {
 
-    //Probabilty depends on the game difficulty
-    // calculate proper probabilty later
-    // Easy : probabilty = 10/16
-    // Medium :
-    // Hard :
+    var diff = gLevelSIZE
+    if (diff === 4) diff = 13
+    else if (diff === 8) diff = 40
+    else if (diff === 12) diff = 100
 
-    const probabilty = 11 / Math.pow(gLevelSIZE, 2)
+    const probabilty = diff / Math.pow(gLevelSIZE, 2)
 
     if (Math.random() > probabilty) {
         Currcell.isMine = true

@@ -1,10 +1,10 @@
 'use strict'
 
 
-const LIFE = '<img src="./img/heart.gif" id="heart_img">'
-const NORMAL = '😀'
-const DEAD = '😒'
-const WON = '😎'
+const LIFE = '<img src="./img/heart.gif" class="heart_img">'
+const NORMAL = '<img src="./img/NORMAL.gif" class="smiley">'
+const DEAD = '<img src="./img/DEAD.gif" class="smiley">'
+const WON = '<img src="./img/WON.png" class="smiley">'
 
 
 
@@ -141,7 +141,7 @@ console.log(elImg)
   elImg.src = './img/lightbulb2.png'
   gLevel.HINTS--
   gGame.hintIson = true
-//   width: 30px;
+
 }
 
 function safeClick() {
